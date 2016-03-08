@@ -15,7 +15,7 @@ After adding jQuery and `matchbox.js` to your project, call the `.matchbox()` fu
 
 Currently, there are two settings that you can update: `selector` and `groups_of`. For the `selector` setting, pass in the class name of the items you wish to match. This defaults to `.js-match` like you see above.
 
-For the `groups_of` setting, pass in the number of items you want to match in each group. The default setting is 2 (You wouldn't need to match heights of a singular item, would you? (It's a paradox, don't think to hard about it or about nested parentheticals)).
+For the `groups_of` setting, pass in the number of items you want to match in each group. The default setting is 2 (You wouldn't need to match heights of a singular item, would you? (It's a paradox, don't think too hard about it or about nested parentheticals)).
 
 ## Future
 
