@@ -6,6 +6,7 @@ A simple JavaScript plugin to match the height of boxes.
 
 ```js
 var matchbox = new Matchbox({
+  initClass: 'js-matchbox',
   selector: '.js-match',
   groupsOf: 2
 });
@@ -19,6 +20,7 @@ After adding `matchbox.js` to your project, instantiate a new `Matchbox`, passin
 
 | Option Name | Type | Description | Default Value |
 |---|---|---|---|
+| initClass | String | class name set on `body` on init | 'js-matchbox' |
 | selector | String | class or id selector | '.js-match' |
 | groupsOf | Integer | Size of groups to process for matches | 2 |
 
