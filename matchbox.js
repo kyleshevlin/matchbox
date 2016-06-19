@@ -1,51 +1,58 @@
 /*!
- * Matchbox v1.0.0
+ * Matchbox v1.0.1
  * Match the height of boxes
+ * @author Kyle Shevlin
  * MIT License
  */
 
-(function() {
+(function (root, factory) {
+  if ( typeof define === 'function' && define.amd ) {
+    define([], factory(root));
+  } else if ( typeof exports === 'object' ) {
+    module.exports = factory(root);
+  } else {
+    root.Matchbox = factory(root); // @todo rename plugin
+  }
+})(typeof global !== "undefined" ? global : this.window || this.global, function (root) {
   'use strict';
 
-  /**
-   * Matchbox
-   * @constructor
-   * @param {Object}
-   */
-  this.Matchbox = function() {
-    var defaults = {
-      selector: '.js-match',
-      groupsOf: 2
-    };
+  //////////////////////////////
+  // Variables
+  //////////////////////////////
 
-    if ( arguments[0] && typeof arguments[0] === "object" ) {
-      this.options = extendDefaults(defaults, arguments[0]);
-    } else {
-      this.options = defaults;
+  var Matchbox = {}; // Object for public APIs
+  var supports = !!document.querySelector && !!root.addEventListener; // Feature test
+  var settings;
+
+  // Default settings
+  var defaults = {
+    initClass: 'js-matchbox',
+    selector: '.js-match',
+    groupsOf: 2
+  };
+
+  //////////////////////////////
+  // Utility Functions
+  //////////////////////////////
+
+  /**
+   * Utility method to extend defaults with user options
+   * @access private
+   * @param {Object} defaultOptions - Object with default keys and values
+   * @param {Object} userOptions - Object with user options keys and values
+   * @returns {Object} An object of the merged options
+   */
+  function extendDefaults(defaultOptions, userOptions) {
+    var option;
+
+    for (option in userOptions) {
+      if ( userOptions.hasOwnProperty(option) ) {
+        defaultOptions[option] = userOptions[option];
+      }
     }
-  }
 
-  /**
-   * Matchbox init method; Initializes Matchbox with options passed into the new Constructor
-   * @access public
-   */
-  Matchbox.prototype.init = function() {
-    matchItems(createArrayFromNodesList(this.options.selector), this.options.groupsOf);
+    return defaultOptions;
   }
-
-  /**
-   * Update groupsOf option on the fly
-   * @access public
-   * @param {Integer} number
-   */
-  Matchbox.prototype.groupsOf = function(number) {
-    if ( !isNaN(number) ) {
-      this.options.groupsOf = number;
-      matchItems(createArrayFromNodesList(this.options.selector), this.options.groupsOf);
-    }
-  }
-
-  // Private Methods
 
   /**
    * Create an array from a nodeList
@@ -56,6 +63,26 @@
   function createArrayFromNodesList(selector) {
     return Array.prototype.slice.call(document.querySelectorAll(selector));
   }
+
+  function addInitClass() {
+    document.documentElement.classList.add( settings.initClass );
+  }
+
+  function removeInitClass() {
+    document.documentElement.classList.remove( settings.initClass );
+  }
+
+  function setSettings(defaults, options) {
+    settings = extendDefaults( defaults, options );
+  }
+
+  function resetSettings() {
+    settings = null;
+  }
+
+  //////////////////////////////
+  // Private Matchbox Functions
+  //////////////////////////////
 
   /**
    * Get the next set of items to process
@@ -144,21 +171,49 @@
     }
   }
 
-  /**
-   * Utility method to extend defaults with user options
-   * @access private
-   * @param {Object} source - Object with default keys and values
-   * @param {Object} properties - Object with user options keys and values
-   * @returns {Object} An object of the merged options
-   */
-  function extendDefaults(source, properties) {
-    var property;
+  //////////////////////////////
+  // Public APIs
+  //////////////////////////////
 
-    for (property in properties) {
-      if ( properties.hasOwnProperty(property) ) {
-        source[property] = properties[property];
-      }
+  /**
+   * Destroy the current initialization.
+   * @public
+   */
+  Matchbox.destroy = function() {
+    if ( !settings ) return;
+
+    removeInitClass();
+    resetSettings();
+  };
+
+  /**
+   * Initialize Plugin
+   * @public
+   * @param {Object} options User settings
+   */
+  Matchbox.init = function(options) {
+    if ( !supports ) return;
+
+    Matchbox.destroy();
+    setSettings(defaults, options || {});
+    addInitClass();
+    matchItems(createArrayFromNodesList(settings.selector), settings.groupsOf);
+  };
+
+  /**
+   * Update groupsOf option on the fly
+   * @access public
+   * @param {Integer} number
+   */
+  Matchbox.groupsOf = function(number) {
+    if ( !settings ) return;
+
+    if ( !isNaN(number) ) {
+      settings.groupsOf = number;
+
+      matchItems(createArrayFromNodesList(settings.selector), settings.groupsOf);
     }
-    return source;
   }
-}());
+
+  return Matchbox;
+});
