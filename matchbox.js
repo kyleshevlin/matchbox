@@ -13,14 +13,13 @@
   } else {
     root.Matchbox = factory(root); // @todo rename plugin
   }
-})(typeof global !== "undefined" ? global : this.window || this.global, function (root) {
+})(typeof global !== "undefined" ? global : this.window || this.global, function(root) {
   'use strict';
 
   //////////////////////////////
   // Variables
   //////////////////////////////
 
-  var Matchbox = {}; // Object for public APIs
   var supports = !!document.querySelector && !!root.addEventListener; // Feature test
   var settings;
 
@@ -30,6 +29,18 @@
     selector: '.js-match',
     groupsOf: 2
   };
+
+  //////////////////////////////
+  // Constructor
+  //////////////////////////////
+
+  function Matchbox(options) {
+    this.initClass;
+    this.selector;
+    this.groupsOf;
+    this.settings = setSettings(defaults, options || {});
+    this.init();
+  }
 
   //////////////////////////////
   // Utility Functions
@@ -179,7 +190,7 @@
    * Destroy the current initialization.
    * @public
    */
-  Matchbox.destroy = function() {
+  Matchbox.prototype.destroy = function() {
     if ( !settings ) return;
 
     removeInitClass();
@@ -191,10 +202,10 @@
    * @public
    * @param {Object} options User settings
    */
-  Matchbox.init = function(options) {
+  Matchbox.prototype.init = function(options) {
     if ( !supports ) return;
 
-    Matchbox.destroy();
+    this.destroy();
     setSettings(defaults, options || {});
     addInitClass();
     matchItems(createArrayFromNodesList(settings.selector), settings.groupsOf);
@@ -205,7 +216,7 @@
    * @access public
    * @param {Integer} number
    */
-  Matchbox.groupsOf = function(number) {
+  Matchbox.prototype.groupsOf = function(number) {
     if ( !settings ) return;
 
     if ( !isNaN(number) ) {
