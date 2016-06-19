@@ -30,6 +30,7 @@ After adding `matchbox.js` to your project, instantiate a new `Matchbox`, passin
 |---|---|
 | init() | initializes the Matchbox instance with |
 | groupsOf(number) | Quickly modify the groupsOf setting on a Matchbox instance |
+| destroy() | destroys the Matchbox instance and resets all applied heights |
 
 ## Future
 
