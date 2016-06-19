@@ -75,6 +75,26 @@
     return Array.prototype.slice.call(document.querySelectorAll(selector));
   }
 
+  /**
+   * On window scroll and resize, only run events at a rate of 15fps for better performance
+   * @private
+   * @param  {Function} callback - function to be throttled
+   */
+  function throttle(callback) {
+    var wait = false;
+
+    return function() {
+      if ( !wait ) {
+        callback.call();
+        wait = true;
+
+        setTimeout(function () {
+          wait = false;
+        }, 66);
+      }
+    }
+  }
+
   function addInitClass() {
     document.documentElement.classList.add( settings.initClass );
   }
@@ -89,6 +109,14 @@
 
   function resetSettings() {
     settings = null;
+  }
+
+  function resetBoxHeights() {
+    var boxes = createArrayFromNodesList(settings.selector);
+
+    boxes.forEach(function(item, index, array) {
+      item.style.height = '';
+    });
   }
 
   //////////////////////////////
@@ -182,6 +210,10 @@
     }
   }
 
+  function runMatchItems() {
+    matchItems(createArrayFromNodesList(settings.selector), settings.groupsOf);
+  }
+
   //////////////////////////////
   // Public APIs
   //////////////////////////////
@@ -193,8 +225,11 @@
   Matchbox.prototype.destroy = function() {
     if ( !settings ) return;
 
+    resetBoxHeights();
     removeInitClass();
     resetSettings();
+
+    window.removeEventListener('resize', throttle(runMatchItems));
   };
 
   /**
@@ -209,6 +244,8 @@
     setSettings(defaults, options || {});
     addInitClass();
     matchItems(createArrayFromNodesList(settings.selector), settings.groupsOf);
+
+    window.addEventListener('resize', throttle(runMatchItems));
   };
 
   /**
