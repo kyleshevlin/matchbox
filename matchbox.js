@@ -1,28 +1,22 @@
 /*!
- * Matchbox v1.0.1
+ * Matchbox v1.1.0
  * Match the height of boxes
  * @author Kyle Shevlin
  * MIT License
  */
 
-(function (root, factory) {
-  if ( typeof define === 'function' && define.amd ) {
-    define([], factory(root));
-  } else if ( typeof exports === 'object' ) {
-    module.exports = factory(root);
-  } else {
-    root.Matchbox = factory(root); // @todo rename plugin
-  }
-})(typeof global !== "undefined" ? global : this.window || this.global, function(root) {
+(function (window, factory) {
   'use strict';
 
-  //////////////////////////////
-  // Variables
-  //////////////////////////////
-
-  var supports = !!document.querySelector && !!root.addEventListener; // Feature test
-  var settings,
-      childrenArray;
+  if ( typeof define === 'function' && define.amd ) {
+    define([], factory(window));
+  } else if ( typeof exports === 'object' ) {
+    module.exports = factory(window);
+  } else {
+    window.Matchbox = factory(window);
+  }
+})(window, function factory(window) {
+  'use strict';
 
   // Default settings
   var defaults = {
@@ -33,54 +27,44 @@
   };
 
   //////////////////////////////
-  // Constructor
-  //////////////////////////////
-
-  function Matchbox(options) {
-    this.initClass;
-    this.parentSelector;
-    this.childSelector;
-    this.groupsOf;
-    this.settings = setSettings(defaults, options || {});
-    this.init();
-  }
-
-  //////////////////////////////
   // Utility Functions
   //////////////////////////////
 
   /**
    * Utility method to extend defaults with user options
    * @access private
-   * @param {Object} defaultOptions - Object with default keys and values
-   * @param {Object} userOptions - Object with user options keys and values
+   * @param {Object} options - Object with user options keys and values
    * @returns {Object} An object of the merged options
    */
-  function extend(defaultOptions, userOptions) {
-    var option;
+  function extend(options) {
+    var default_keys = Object.keys(defaults);
 
-    for (option in userOptions) {
-      if ( userOptions.hasOwnProperty(option) ) {
-        defaultOptions[option] = userOptions[option];
+    // Loop through default params
+    for (var i = 0; i < default_keys.length; i++) {
+      var key = default_keys[i];
+
+      // If options does not have the default key, apply it
+      if( !options.hasOwnProperty(key) ) {
+        options[key] = defaults[key];
       }
     }
 
-    return defaultOptions;
+    return options;
   }
 
   /**
    * Create an array from a nodeList
    * @access private
-   * @param {String} selector - Selector with which to query the DOM and create nodeList
+   * @param {Object} list - NodeList object to be converted into array
    * @returns {Array} Array of DOM nodes
    */
-  function arrayFromList(selector) {
-    return Array.prototype.slice.call(document.querySelectorAll(selector));
+  function arrayFromList(list) {
+    return Array.prototype.slice.call(list);
   }
 
   /**
    * On window scroll and resize, only run events at a rate of 15fps for better performance
-   * @private
+   * @access private
    * @param  {Function} callback - function to be throttled
    */
   function throttle(callback) {
@@ -98,33 +82,51 @@
     }
   }
 
-  function addInitClass() {
-    document.documentElement.classList.add( settings.initClass );
+  //////////////////////////////
+  // Private Matchbox Functions
+  //////////////////////////////
+
+  /**
+   * Adds the initClass to the body element
+   * @access private
+   * @param {Object} instance - Matchbox instance
+   */
+  function addInitClass(instance) {
+    document.documentElement.classList.add(instance.settings.initClass);
   }
 
-  function removeInitClass() {
-    document.documentElement.classList.remove( settings.initClass );
+  /**
+   * Removes the initClass from the body element
+   * @access private
+   * @param {Object} instance - Matchbox instance
+   */
+  function removeInitClass(instance) {
+    document.documentElement.classList.remove(instance.settings.initClass);
   }
 
-  function setSettings(defaults, options) {
-    settings = extend( defaults, options );
+  /**
+   * Gets the boxes that are children of the parent
+   * @access private
+   * @param {Object} instance - Matchbox instance
+   * @returns {Array} - Array of DOM elements
+   */
+  function getBoxes(instance) {
+    var parent = document.querySelector(instance.settings.parentSelector);
+    return arrayFromList(parent.querySelectorAll(instance.settings.childSelector));
   }
 
-  function resetSettings() {
-    settings = null;
-  }
-
-  function resetBoxHeights() {
-    var boxes = arrayFromList(settings.childSelector);
+  /**
+   * Reset the height of all boxes to their auto height
+   * @access private
+   * @param {Object} instance - Matchbox instance
+   */
+  function resetBoxHeights(instance) {
+    var boxes = getBoxes(instance);
 
     boxes.forEach(function(item, index, array) {
       item.style.height = '';
     });
   }
-
-  //////////////////////////////
-  // Private Matchbox Functions
-  //////////////////////////////
 
   /**
    * Get the next set of items to process
@@ -213,62 +215,72 @@
     }
   }
 
-  function setChildrenArray() {
-    var el = document.querySelector(settings.parentSelector);
-    childrenArray = arrayFromList(el.querySelectorAll(settings.childSelector));
+  /**
+   * Runs the match items function
+   * @access private
+   * @param {Object} instance - Matchbox instance
+   */
+  function runMatchItems(instance) {
+    var boxes = getBoxes(instance);
+    matchItems(boxes, instance.settings.groupsOf);
   }
 
-  function runMatchItems() {
-    setChildrenArray();
-    matchItems(childrenArray, settings.groupsOf);
+  //////////////////////////////
+  // Constructor
+  //////////////////////////////
+
+  function Matchbox(options) {
+    var opts = options || {};
+    this.settings = extend(opts);
   }
 
   //////////////////////////////
   // Public APIs
   //////////////////////////////
 
-  /**
-   * Destroy the current initialization.
-   * @public
-   */
-  Matchbox.prototype.destroy = function() {
-    if ( !settings ) return;
+  Matchbox.prototype = {
+    /**
+     * Destroy the current initialization.
+     * @access public
+     */
+    destroy: function() {
+      console.log('destroy invoked');
+      var _this = this;
 
-    resetBoxHeights();
-    removeInitClass();
-    resetSettings();
+      resetBoxHeights(this);
+      removeInitClass(this);
 
-    window.removeEventListener('resize', throttle(runMatchItems));
-  };
+      window.removeEventListener('resize', throttle(runMatchItems));
+    },
 
-  /**
-   * Initialize Plugin
-   * @public
-   * @param {Object} options User settings
-   */
-  Matchbox.prototype.init = function(options) {
-    if ( !supports ) return;
+    /**
+     * Initialize Plugin
+     * @access public
+     * @param {Object} options User settings
+     */
+    init: function() {
+      var _this = this;
 
-    this.destroy();
-    setSettings(defaults, options || {});
-    addInitClass();
-    runMatchItems();
+      this.destroy();
+      addInitClass(this);
+      runMatchItems(this);
 
-    window.addEventListener('resize', throttle(runMatchItems));
-  };
+      window.addEventListener('resize', throttle(runMatchItems(_this)));
+    },
 
-  /**
-   * Update groupsOf option on the fly
-   * @access public
-   * @param {Integer} number
-   */
-  Matchbox.prototype.groupsOf = function(number) {
-    if ( !settings ) return;
+    /**
+     * Update groupsOf option on the fly
+     * @access public
+     * @param {Integer} number
+     */
+    groupsOf: function(number) {
+      var _this = this;
 
-    if ( !isNaN(number) ) {
-      settings.groupsOf = number;
+      if ( !isNaN(number) ) {
+        this.settings.groupsOf = number;
 
-      runMatchItems();
+        runMatchItems(_this);
+      }
     }
   }
 

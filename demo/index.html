@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Matchbox Demo</title>
+
+  <style>
+    [class^="item-"] {
+      float: left;
+      width: 100px;
+      background: rgba(128, 128, 128, 0.4);
+      margin: 10px;
+    }
+    .group-two [class^="item-"] {
+      background: rgba(255, 0, 0, 0.4);
+    }
+
+    .item-1 {
+      height: 50px;
+    }
+
+    .item-2 {
+      height: 100px;
+    }
+
+    .item-3 {
+      height: 150px;
+    }
+
+    .item-4 {
+      height: 200px;
+    }
+
+    .item-5 {
+      height: 250px;
+    }
+
+    .item-6 {
+      height: 300px;
+    }
+
+    .item-7 {
+      height: 350px;
+    }
+
+    .item-8 {
+      height: 400px;
+    }
+
+    .item-9 {
+      height: 450px;
+    }
+
+    .item-10 {
+      height: 500px;
+    }
+  </style>
+</head>
+<body>
+  <div class="group-one js-box-one">
+    <div class="item-1 js-match"></div>
+    <div class="item-2 js-match"></div>
+    <div class="item-3 js-match"></div>
+    <div class="item-4 js-match"></div>
+    <div class="item-5 js-match"></div>
+    <div class="item-6 js-match"></div>
+    <div class="item-7 js-match"></div>
+    <div class="item-8 js-match"></div>
+    <div class="item-9 js-match"></div>
+    <div class="item-10 js-match"></div>
+  </div>
+  <div class="group-two js-box-two">
+    <div class="item-1 js-match"></div>
+    <div class="item-2 js-match"></div>
+    <div class="item-3 js-match"></div>
+    <div class="item-4 js-match"></div>
+    <div class="item-5 js-match"></div>
+    <div class="item-6 js-match"></div>
+    <div class="item-7 js-match"></div>
+    <div class="item-8 js-match"></div>
+    <div class="item-9 js-match"></div>
+    <div class="item-10 js-match"></div>
+  </div>
+
+  <script src="../matchbox.js"></script>
+  <script>
+    var matchbox1 = new Matchbox({
+      parentSelector: '.js-box-one',
+      groupsOf: 3
+    });
+
+    var matchbox2 = new Matchbox({
+      parentSelector: '.js-box-two'
+    });
+
+    matchbox1.init();
+    matchbox2.init();
+  </script>
+</body>
+</html>
