@@ -250,7 +250,11 @@
       resetBoxHeights(this);
       removeInitClass(this);
 
-      window.removeEventListener('resize', throttle(runMatchItems));
+      function onResize() {
+        throttle(runMatchItems(_this));
+      }
+
+      window.removeEventListener('resize', onResize);
     },
 
     /**
@@ -265,7 +269,11 @@
       addInitClass(this);
       runMatchItems(this);
 
-      window.addEventListener('resize', throttle(runMatchItems(_this)));
+      function onResize() {
+        throttle(runMatchItems(_this));
+      }
+
+      window.addEventListener('resize', onResize);
     },
 
     /**
