@@ -21,12 +21,14 @@
   //////////////////////////////
 
   var supports = !!document.querySelector && !!root.addEventListener; // Feature test
-  var settings;
+  var settings,
+      childrenArray;
 
   // Default settings
   var defaults = {
-    initClass: 'js-matchbox',
-    selector: '.js-match',
+    initClass: 'js-matchbox-initialized',
+    parentSelector: '.js-box',
+    childSelector: '.js-match',
     groupsOf: 2
   };
 
@@ -36,7 +38,8 @@
 
   function Matchbox(options) {
     this.initClass;
-    this.selector;
+    this.parentSelector;
+    this.childSelector;
     this.groupsOf;
     this.settings = setSettings(defaults, options || {});
     this.init();
@@ -53,7 +56,7 @@
    * @param {Object} userOptions - Object with user options keys and values
    * @returns {Object} An object of the merged options
    */
-  function extendDefaults(defaultOptions, userOptions) {
+  function extend(defaultOptions, userOptions) {
     var option;
 
     for (option in userOptions) {
@@ -71,7 +74,7 @@
    * @param {String} selector - Selector with which to query the DOM and create nodeList
    * @returns {Array} Array of DOM nodes
    */
-  function createArrayFromNodesList(selector) {
+  function arrayFromList(selector) {
     return Array.prototype.slice.call(document.querySelectorAll(selector));
   }
 
@@ -104,7 +107,7 @@
   }
 
   function setSettings(defaults, options) {
-    settings = extendDefaults( defaults, options );
+    settings = extend( defaults, options );
   }
 
   function resetSettings() {
@@ -112,7 +115,7 @@
   }
 
   function resetBoxHeights() {
-    var boxes = createArrayFromNodesList(settings.selector);
+    var boxes = arrayFromList(settings.childSelector);
 
     boxes.forEach(function(item, index, array) {
       item.style.height = '';
@@ -210,8 +213,14 @@
     }
   }
 
+  function setChildrenArray() {
+    var el = document.querySelector(settings.parentSelector);
+    childrenArray = arrayFromList(el.querySelectorAll(settings.childSelector));
+  }
+
   function runMatchItems() {
-    matchItems(createArrayFromNodesList(settings.selector), settings.groupsOf);
+    setChildrenArray();
+    matchItems(childrenArray, settings.groupsOf);
   }
 
   //////////////////////////////
@@ -243,7 +252,7 @@
     this.destroy();
     setSettings(defaults, options || {});
     addInitClass();
-    matchItems(createArrayFromNodesList(settings.selector), settings.groupsOf);
+    runMatchItems();
 
     window.addEventListener('resize', throttle(runMatchItems));
   };
@@ -259,7 +268,7 @@
     if ( !isNaN(number) ) {
       settings.groupsOf = number;
 
-      matchItems(createArrayFromNodesList(settings.selector), settings.groupsOf);
+      runMatchItems();
     }
   }
 
