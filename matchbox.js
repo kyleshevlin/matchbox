@@ -244,7 +244,6 @@
      * @access public
      */
     destroy: function() {
-      console.log('destroy invoked');
       var _this = this;
 
       resetBoxHeights(this);
