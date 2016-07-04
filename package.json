@@ -1,0 +1,26 @@
+{
+  "name": "matchbox",
+  "version": "1.0.0",
+  "description": "\"JavaScript plugin for matching the height of boxes\"",
+  "main": "matchbox.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kyleshevlin/matchbox.git"
+  },
+  "author": "Kyle Shevlin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kyleshevlin/matchbox/issues"
+  },
+  "homepage": "https://github.com/kyleshevlin/matchbox#readme",
+  "devDependencies": {
+    "jasmine-core": "^2.4.1",
+    "karma": "^1.1.0",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-jasmine": "^1.0.2"
+  }
+}
