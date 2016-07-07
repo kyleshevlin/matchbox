@@ -49,6 +49,7 @@ describe('Matchbox', function() {
         expect(matchbox.settings.parentSelector).toBeDefined();
         expect(matchbox.settings.childSelector).toBeDefined();
         expect(matchbox.settings.groupsOf).toBeDefined();
+        expect(matchbox.settings.breakpoints).toBeDefined();
       });
 
       it('should have settings set when only a partial object is passed in', function() {
@@ -58,6 +59,21 @@ describe('Matchbox', function() {
         expect(matchbox.settings.parentSelector).toBeDefined();
         expect(matchbox.settings.childSelector).toBeDefined();
         expect(matchbox.settings.groupsOf).toBe(4);
+        expect(matchbox.settings.breakpoints).toEqual([]);
+      });
+
+      it('should deeply nest an object on breakpoints property if passed in', function() {
+        matchbox = new Matchbox({ breakpoints: [
+            { bp: 768, groupsOf: 3 },
+            { bp: 1024, groupsOf: 4 },
+            { bp: 1350, groupsOf: 5 }
+          ]});
+
+        expect(matchbox.settings.breakpoints).toEqual([
+            { bp: 768, groupsOf: 3 },
+            { bp: 1024, groupsOf: 4 },
+            { bp: 1350, groupsOf: 5 }
+          ]);
       });
     });
   });

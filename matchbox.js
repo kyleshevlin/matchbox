@@ -23,7 +23,8 @@
     initClass: 'js-matchbox-initialized',
     parentSelector: '.js-box',
     childSelector: '.js-match',
-    groupsOf: 2
+    groupsOf: 2,
+    breakpoints: []
   };
 
   //////////////////////////////
@@ -225,6 +226,64 @@
     matchItems(boxes, instance.settings.groupsOf);
   }
 
+  /**
+   * Gathers the breakpoints and groupsOf values, adds and sorts them from lowest to highest in array
+   * @access private
+   * @param {Object} instance - Matchbox instance
+   * @returns {Array} Sorted array of breakpoints
+   */
+  function createBreakpoints2DArray(instance) {
+    var settingsArray = instance.settings.breakpoints,
+        bpArray = [];
+
+    if ( Array.isArray(settingsArray) && !!settingsArray.length ) {
+
+      settingsArray.forEach(function(curVal, index, array) {
+
+        if ( curVal.hasOwnProperty('bp') && curVal.hasOwnProperty('groupsOf') ) {
+          var array = [curVal['bp'], curVal['groupsOf']];
+          bpArray.push(array);
+        }
+      });
+
+      bpArray.sort(function(a, b) { return a[0] - b[0]; });
+    }
+
+    return bpArray;
+  }
+
+  function handleBreakpoints(instance) {
+    var bpArray,
+        ww,
+        lowestBp = Infinity,
+        initGroupsOf = instance.settings._initialGroupsOf,
+        groupsOfNow;
+
+    bpArray = createBreakpoints2DArray(instance);
+    ww = window.innerWidth;
+
+    if ( !!bpArray.length ) {
+      bpArray.forEach(function(curVal, index, array) {
+        if ( curVal[0] < lowestBp ) {
+          lowestBp = curVal[0];
+        }
+
+        var thisBp = curVal[0];
+        var nextBp = array[index + 1] !== undefined ? array[index + 1][0] : Infinity;
+
+        if ( ww >= thisBp && ww < nextBp ) {
+          groupsOfNow = curVal[1];
+        } else if ( ww < lowestBp ) {
+          groupsOfNow = initGroupsOf;
+        }
+      });
+    } else {
+      groupsOfNow = initGroupsOf;
+    }
+
+    instance.groupsOf(groupsOfNow);
+  }
+
   //////////////////////////////
   // Constructor
   //////////////////////////////
@@ -234,9 +293,10 @@
         opts = options || {};
 
     _this.settings = extend(opts);
+    _this.settings._initialGroupsOf = _this.settings.groupsOf;
 
-    _this.onResize = function() {
-      throttle(runMatchItems(_this));
+    _this._onResize = function() {
+      throttle(handleBreakpoints(_this));
     }
   }
 
@@ -255,7 +315,7 @@
       resetBoxHeights(this);
       removeInitClass(this);
 
-      window.removeEventListener('resize', _this.onResize, false);
+      window.removeEventListener('resize', _this._onResize, false);
     },
 
     /**
@@ -268,9 +328,9 @@
 
       this.destroy();
       addInitClass(this);
-      runMatchItems(this);
+      handleBreakpoints(this);
 
-      window.addEventListener('resize', _this.onResize, false);
+      window.addEventListener('resize', _this._onResize, false);
     },
 
     /**
@@ -279,12 +339,10 @@
      * @param {Integer} number
      */
     groupsOf: function(number) {
-      var _this = this;
-
       if ( !isNaN(number) ) {
         this.settings.groupsOf = number;
 
-        runMatchItems(_this);
+        runMatchItems(this);
       }
     }
   }
