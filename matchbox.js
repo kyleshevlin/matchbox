@@ -230,8 +230,14 @@
   //////////////////////////////
 
   function Matchbox(options) {
-    var opts = options || {};
-    this.settings = extend(opts);
+    var _this = this,
+        opts = options || {};
+
+    _this.settings = extend(opts);
+
+    _this.onResize = function() {
+      throttle(runMatchItems(_this));
+    }
   }
 
   //////////////////////////////
@@ -249,11 +255,7 @@
       resetBoxHeights(this);
       removeInitClass(this);
 
-      function onResize() {
-        throttle(runMatchItems(_this));
-      }
-
-      window.removeEventListener('resize', onResize);
+      window.removeEventListener('resize', _this.onResize, false);
     },
 
     /**
@@ -268,11 +270,7 @@
       addInitClass(this);
       runMatchItems(this);
 
-      function onResize() {
-        throttle(runMatchItems(_this));
-      }
-
-      window.addEventListener('resize', onResize);
+      window.addEventListener('resize', _this.onResize, false);
     },
 
     /**
