@@ -1,0 +1,42 @@
+//////////////////////////////
+// Variables
+//////////////////////////////
+
+// Breakpoints
+$breakpoints: (
+  'alpha': 600px,
+  'bravo': 1025px,
+  'charlie': 1350px
+);
+
+// Shevy Map
+$shevy: (
+  base-font-size: 1rem,
+  base-line-height: 1.8,
+  base-font-scale: (2, 1.5, 1.35, 1.25, 1.15, 1),
+  proximity: true,
+  proximity-factor: .8
+);
+
+// Colors
+$c-black: #0a0200;
+$c-dark-gray: #2b2b2b;
+$c-light-gray: lighten($c-dark-gray, 45%);
+$c-white: #f7f7f7;
+$c-brand: #33a1cc;
+$c-dark-brand: darken($c-brand, 30%);
+
+// Font Stacks
+$f-serif: serif;
+$f-sans: sans-serif;
+$f-droid: 'Droid Serif', $f-serif;
+$f-cata: 'Catamaran', $f-sans;
+
+// Functional Fonts
+$f-headings: $f-cata;
+$f-content: $f-droid;
+
+// Z-indexes
+$z-indexes: (
+  'default': 'auto'
+);

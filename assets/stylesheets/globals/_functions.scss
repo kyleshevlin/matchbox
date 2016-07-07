@@ -1,0 +1,12 @@
+//////////////////////////////
+// Functions
+//////////////////////////////
+
+// Z-index function
+@function zi($layer: 'default') {
+  @if not map-has-key($z-indexes, $layer) {
+    @warn "No value found for #{$layer} in $z-indexes map. Property omitted.";
+  }
+
+  @return map-get($z-indexes, $layer);
+}

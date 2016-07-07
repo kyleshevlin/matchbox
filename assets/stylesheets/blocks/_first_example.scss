@@ -1,0 +1,32 @@
+//////////////////////////////
+// First Example
+//////////////////////////////
+
+.first_example {
+  margin-bottom: bs(2);
+
+  &-box {
+    @include clearfix;
+    margin-bottom: bs();
+  }
+
+  &-match {
+    float: left;
+    width: 32%;
+    background: $c-brand;
+    padding: 15px;
+    margin-right: 2%;
+    margin-bottom: bs();
+
+    &:last-child {
+      float: right;
+      margin-right: 0;
+    }
+
+    &-inner {
+      background: darken($c-brand, 10%);
+      color: $c-white;
+      text-align: center;
+    }
+  }
+}

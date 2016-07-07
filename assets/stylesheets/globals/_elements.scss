@@ -1,0 +1,84 @@
+//////////////////////////////
+// Elements
+//////////////////////////////
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-family: $f-content;
+  font-size: 100%;
+
+  @include bp(charlie) {
+    font-size: 115%;
+  }
+}
+
+body {
+  background: $c-white;
+  color: $c-black;
+}
+
+a {
+  color: $c-brand;
+  text-decoration: none;
+  position: relative;
+  transition: color .3s ease;
+
+  &:after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 1px;
+    background: $c-brand;
+    transition: width .3s ease,
+                background .3s ease;
+    position: absolute;
+    top: 100%;
+    left: 0;
+  }
+
+  &:hover {
+    color: darken($c-brand, 4%);
+
+    &:after {
+      width: 100%;
+      background: darken($c-brand, 4%);
+    }
+  }
+
+  .footer & {
+    color: lighten($c-brand, 10%);
+
+    &:hover {
+      color: darken($c-brand, 4%);
+    }
+  }
+}
+
+section {
+  margin-bottom: bs(2);
+
+  @include bp(bravo) {
+    margin-bottom: bs(3);
+  }
+}
+
+svg {
+  font-size: .75rem;
+}
+
+ol,
+ul {
+  font-size: 100%;
+  line-height: 1.8;
+  margin-bottom: bs();
+}
+
+ul {
+  list-style: disc;
+}

@@ -1,0 +1,93 @@
+//////////////////////////////
+// Card
+//////////////////////////////
+
+.card {
+  float: left;
+  width: 48%;
+  background: $c-brand;
+  color: $c-white;
+  padding: 10px;
+  margin-right: 2%;
+  margin-bottom: bs();
+
+  @include bp(alpha) {
+    width: 32%;
+  }
+
+  @include bp(bravo) {
+    width: 23.5%;
+    margin-right: 2%;
+  }
+
+  @include bp(charlie) {
+    width: 18.5%;
+    margin-right: 1.875%;
+  }
+
+  &:nth-child(2n) {
+    @include last;
+
+    @include bp(alpha) {
+      float: left;
+      margin-right: 2%;
+    }
+
+    @include bp(bravo) {
+      margin-right: 2%;
+    }
+
+    @include bp(charlie) {
+      margin-right: 1.875%;
+    }
+  }
+
+  &:nth-child(3n) {
+
+    @include bp(alpha) {
+      @include last;
+    }
+
+    @include bp(bravo) {
+      float: left;
+      margin-right: 2%;
+    }
+
+    @include bp(charlie) {
+      margin-right: 1.875%;
+    }
+  }
+
+  &:nth-child(4n) {
+
+    @include bp(bravo) {
+      @include last;
+    }
+
+    @include bp(charlie) {
+      float: left;
+      margin-right: 1.875%;
+    }
+  }
+
+  &:nth-child(5n) {
+
+    @include bp(charlie) {
+      @include last;
+    }
+  }
+
+  &-image-wrap {
+    margin-bottom: bs(.5);
+  }
+
+  &-image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  &-content {
+    font-size: 80%;
+  }
+}

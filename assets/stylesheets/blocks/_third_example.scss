@@ -1,0 +1,11 @@
+//////////////////////////////
+// Third Example
+//////////////////////////////
+
+.third_example {
+  margin-bottom: bs(2);
+
+  &-box {
+    @include clearfix;
+  }
+}

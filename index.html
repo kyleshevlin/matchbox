@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Matchbox Demo</title>
+  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700|Catamaran:100,400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="dist/css/application.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <h1 class="header-heading">Matchbox</h1>
+      <h3 class="header-subheading">A vanilla JavaScript plugin for... well... matching the height of boxes.</h3>
+    </div>
+  </header>
+
+  <div class="container">
+    <section>
+      <p>
+        It's still not easy to make boxes in a row the same height with CSS alone when they have dynamic inner contents, they can't be a fixed height, and they need to be responsive.
+      </p>
+
+      <p>
+        Matchbox is a vanilla JavaScript plugin to help you do this. It does the work of matching each box to the tallest in its row, listens and responds to the resize event to keep your boxes the same height when inner content shifts around, and can be customized on the fly.
+      </p>
+
+      <p>
+        Let's look at a common example. Three boxes in a row, each with differently heighted inner content.
+      </p>
+
+      <div class="first_example">
+        <div class="first_example-box js-first-example-box">
+          <div class="first_example-match js-match">
+            <div class="first_example-match-inner" style="height: 100px">100px</div>
+          </div>
+          <div class="first_example-match js-match">
+            <div class="first_example-match-inner" style="height: 150px">150px</div>
+          </div>
+          <div class="first_example-match js-match">
+            <div class="first_example-match-inner" style="height: 125px">125px</div>
+          </div>
+        </div>
+
+        <button class="btn js-first-example-toggle">Toggle Matchbox</button>
+      </div>
+
+      <p>
+        Matchbox is designed to match heights in groups of boxes, thus, each row of boxes will be adjusted separately.
+      </p>
+
+      <div class="second_example">
+        <div class="second_example-box js-second-example-box">
+          <div class="second_example-match js-match">
+            <div class="second_example-match-inner" style="height: 100px">100px</div>
+          </div>
+          <div class="second_example-match js-match">
+            <div class="second_example-match-inner" style="height: 150px">150px</div>
+          </div>
+          <div class="second_example-match js-match">
+            <div class="second_example-match-inner" style="height: 125px">125px</div>
+          </div>
+          <div class="second_example-match js-match">
+            <div class="second_example-match-inner" style="height: 180px">180px</div>
+          </div>
+          <div class="second_example-match js-match">
+            <div class="second_example-match-inner" style="height: 140px">140px</div>
+          </div>
+          <div class="second_example-match js-match">
+            <div class="second_example-match-inner" style="height: 160px">160px</div>
+          </div>
+        </div>
+
+        <button class="btn js-second-example-toggle">Toggle Matchbox</button>
+      </div>
+
+      <p>
+        Now, let's see it work with some actual content. Let's do a typical use case scenario. You have to display a set of items, each item with a photo and a small bit of text to go along with it. Let's add the challenge of changing how many items are in a row at different breakpoints.
+      </p>
+
+      <div class="third_example">
+        <div class="third_example-box js-third-example-box">
+          <div class="card js-match">
+            <div class="card-image-wrap">
+              <img src="/assets/images/generic_headshot.png" alt="" class="card-image">
+            </div>
+            <div class="card-content">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aut consequatur nesciunt, minima dolore quae similique est vero ad cum.
+            </div>
+          </div>
+
+          <div class="card js-match">
+            <div class="card-image-wrap">
+              <img src="/assets/images/generic_headshot.png" alt="" class="card-image">
+            </div>
+            <div class="card-content">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet repudiandae nostrum rerum consectetur, accusantium quaerat et optio suscipit! Sint quos illum ad in aliquam voluptatibus cum asperiores eos necessitatibus ab, tenetur, animi praesentium culpa numquam dolore voluptate, incidunt. Eum, illo?
+            </div>
+          </div>
+
+          <div class="card js-match">
+            <div class="card-image-wrap">
+              <img src="/assets/images/generic_headshot.png" alt="" class="card-image">
+            </div>
+            <div class="card-content">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex ea non incidunt.
+            </div>
+          </div>
+
+          <div class="card js-match">
+            <div class="card-image-wrap">
+              <img src="/assets/images/generic_headshot.png" alt="" class="card-image">
+            </div>
+            <div class="card-content">
+              Lorem ipsum dolor sit amet.
+            </div>
+          </div>
+
+          <div class="card js-match">
+            <div class="card-image-wrap">
+              <img src="/assets/images/generic_headshot.png" alt="" class="card-image">
+            </div>
+            <div class="card-content">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aut consequatur nesciunt, minima dolore quae similique est vero ad cum.
+            </div>
+          </div>
+
+          <div class="card js-match">
+            <div class="card-image-wrap">
+              <img src="/assets/images/generic_headshot.png" alt="" class="card-image">
+            </div>
+            <div class="card-content">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae voluptatem, dolores laborum non unde, iure maxime magnam autem delectus repellendus.
+            </div>
+          </div>
+
+          <div class="card js-match">
+            <div class="card-image-wrap">
+              <img src="/assets/images/generic_headshot.png" alt="" class="card-image">
+            </div>
+            <div class="card-content">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur nihil officiis voluptas blanditiis esse, amet eaque animi aliquid alias quod maxime asperiores sit, laborum voluptatibus aut pariatur. Praesentium consectetur, porro consequuntur dolorum quo facere earum.
+            </div>
+          </div>
+
+          <div class="card js-match">
+            <div class="card-image-wrap">
+              <img src="/assets/images/generic_headshot.png" alt="" class="card-image">
+            </div>
+            <div class="card-content">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            </div>
+          </div>
+
+          <div class="card js-match">
+            <div class="card-image-wrap">
+              <img src="/assets/images/generic_headshot.png" alt="" class="card-image">
+            </div>
+            <div class="card-content">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus voluptatibus hic saepe dolores earum. Architecto, dolore soluta cum.
+            </div>
+          </div>
+
+          <div class="card js-match">
+            <div class="card-image-wrap">
+              <img src="/assets/images/generic_headshot.png" alt="" class="card-image">
+            </div>
+            <div class="card-content">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus voluptatibus hic saepe dolores earum. Architecto, dolore soluta cum.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      &copy;2016 Kyle Shevlin. Follow me <a href="http://twitter.com/kyleshevlin">@kyleshevlin</a>.
+    </div>
+  </footer>
+  <script src="dist/js/application.js"></script>
+</body>
+</html>

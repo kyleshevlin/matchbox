@@ -1,0 +1,14 @@
+//////////////////////////////
+// Header
+//////////////////////////////
+
+.header {
+  padding: bs(2) 0;
+  text-align: center;
+
+  &-heading {
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0;
+  }
+}
