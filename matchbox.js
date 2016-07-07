@@ -252,6 +252,11 @@
     return bpArray;
   }
 
+  /**
+   * Takes created breakpoint 2d array and processes it for use in resize event
+   * @access private
+   * @param {Object} instance - Matchbox instance
+   */
   function handleBreakpoints(instance) {
     var bpArray,
         ww,
