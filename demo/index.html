@@ -90,7 +90,13 @@
     });
 
     var matchbox2 = new Matchbox({
-      parentSelector: '.js-box-two'
+      parentSelector: '.js-box-two',
+      breakpoints: [
+        { bp: 1024, groupsOf: 4 },
+        { bp: 768, groupsOf: 3 },
+        { bp: 320, groupsOf: 3 },
+        { bp: 1400, groupsOf: 5 }
+      ]
     });
 
     matchbox1.init();
