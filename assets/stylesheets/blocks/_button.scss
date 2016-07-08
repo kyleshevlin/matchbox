@@ -1,0 +1,38 @@
+//////////////////////////////
+// Buttons
+//////////////////////////////
+
+.btn,
+.button {
+  -webkit-appearance: none;
+  display: inline-block;
+  background: $c-brand;
+  color: $c-white;
+  font-family: $f-cata;
+  font-size: 1rem;
+  font-weight: bold;
+  line-height: 1;
+  text-transform: uppercase;
+  padding: 13px 25px 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-bottom: 2px solid darken($c-brand, 10%);
+  border-radius: 4px;
+  outline: 0;
+  position: relative;
+  transition: background .3s ease;
+
+  &:hover {
+    background: darken($c-brand, 5%);
+  }
+
+  &:active {
+    border-bottom: none;
+    top: 2px;
+    margin-bottom: 17px;
+  }
+
+  & + & {
+    margin-left: bs();
+  }
+}

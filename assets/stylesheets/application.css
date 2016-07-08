@@ -326,4 +326,42 @@ h6 {
   font-size: 80%;
 }
 
+.btn,
+.button {
+  -webkit-appearance: none;
+  display: inline-block;
+  background: #33a1cc;
+  color: #f7f7f7;
+  font-family: "Catamaran", sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  line-height: 1;
+  text-transform: uppercase;
+  padding: 13px 25px 10px;
+  margin-bottom: 15px;
+  border: none;
+  border-bottom: 2px solid #2981a3;
+  border-radius: 4px;
+  outline: 0;
+  position: relative;
+  transition: background .3s ease;
+}
+.btn:hover,
+.button:hover {
+  background: #2e91b8;
+}
+.btn:active,
+.button:active {
+  border-bottom: none;
+  top: 2px;
+  margin-bottom: 17px;
+}
+.btn + .btn,
+.button + .btn, .btn +
+.button,
+.button +
+.button {
+  margin-left: 1.44rem;
+}
+
 /*# sourceMappingURL=application.css.map */

@@ -3,22 +3,13 @@
 
   const thirdExample = new Matchbox({
     initClass: 'js-third-example-initialized',
-    parentSelector: '.js-third-example-box'
+    parentSelector: '.js-third-example-box',
+    breakpoints: [
+      { bp: 600, groupsOf: 3 },
+      { bp: 1025, groupsOf: 4 },
+      { bp: 1350, groupsOf: 5 }
+    ]
   });
-
-  function responsiveGroupsOf() {
-    var ww = window.innerWidth;
-
-    if ( ww >= 1350 ) {
-      thirdExample.groupsOf(5);
-    } else if ( ww >= 1025 ) {
-      thirdExample.groupsOf(4);
-    } else if ( ww >= 600 ) {
-      thirdExample.groupsOf(3);
-    } else {
-      thirdExample.groupsOf(2);
-    }
-  }
 
   GSK.third_example = {
     init() {
@@ -26,10 +17,7 @@
 
       imagesLoaded(box, function() {
         thirdExample.init();
-        responsiveGroupsOf(); // Fire it once to get the groupsOf setting correct;
       });
-
-      window.addEventListener('resize', responsiveGroupsOf, false);
     }
   };
 })();
