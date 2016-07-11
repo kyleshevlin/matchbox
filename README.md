@@ -1,5 +1,7 @@
 # Matchbox
 
+[![Build Status](https://travis-ci.org/kyleshevlin/matchbox.svg?branch=master)](https://travis-ci.org/kyleshevlin/matchbox)
+
 A simple JavaScript plugin to match the height of boxes.
 
 ## Installation
