@@ -1,6 +1,4 @@
 language: node_js
 node_js:
   - '5'
-before_script:
-  - 'npm install'
-script: karma start
+script: karma start --single-run
