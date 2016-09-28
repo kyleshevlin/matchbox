@@ -1,5 +1,5 @@
 /*!
- * Matchbox v1.1.0
+ * Matchbox v1.1.1
  * Match the height of boxes
  * @author Kyle Shevlin
  * MIT License
