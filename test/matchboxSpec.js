@@ -16,7 +16,7 @@ function destroyMatches() {
 }
 
 describe('Matchbox', function() {
-  var body = document.documentElement,
+  var body = document.body,
       matchbox,
       box;
 
