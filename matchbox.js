@@ -93,7 +93,7 @@
    * @param {Object} instance - Matchbox instance
    */
   function addInitClass(instance) {
-    document.documentElement.classList.add(instance.settings.initClass);
+    document.body.classList.add(instance.settings.initClass);
   }
 
   /**
@@ -102,7 +102,7 @@
    * @param {Object} instance - Matchbox instance
    */
   function removeInitClass(instance) {
-    document.documentElement.classList.remove(instance.settings.initClass);
+    document.body.classList.remove(instance.settings.initClass);
   }
 
   /**
