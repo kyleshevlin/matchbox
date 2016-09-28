@@ -182,4 +182,32 @@ describe('Matchbox', function() {
       // Third check unnecessary due to the transitive property A -> B; B -> C; A -> C;
     });
   });
+
+  describe('.update()', function() {
+
+    afterEach(function() {
+      resetMatches();
+    });
+
+    it('should force update Matchbox instance, matching heights of match1 and 2', function() {
+      var match1 = document.querySelectorAll('.js-match')[0];
+      var match2 = document.querySelectorAll('.js-match')[1];
+      var div1 = document.createElement('div');
+      var div2 = document.createElement('div');
+
+      match1.appendChild(div1);
+      match2.appendChild(div2);
+
+      matchbox.init();
+
+      div1.style.height = '100px';
+      div2.style.height = '150px';
+
+      matchbox.update();
+
+      expect(match1.style.height === match2.style.height).toBe(true);
+      expect(match1.style.height).toBe('150px');
+      expect(match2.style.height).toBe('150px');
+    });
+  });
 });

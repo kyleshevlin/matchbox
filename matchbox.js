@@ -1,5 +1,5 @@
 /*!
- * Matchbox v1.1.1
+ * Matchbox v1.2.0
  * Match the height of boxes
  * @author Kyle Shevlin
  * MIT License
@@ -346,9 +346,16 @@
     groupsOf: function(number) {
       if ( !isNaN(number) ) {
         this.settings.groupsOf = number;
-
-        runMatchItems(this);
+        this.update();
       }
+    },
+
+    /**
+     * Force Matchbox instance to update, useful for other event listeners
+     * @access public
+     */
+    update: function() {
+      runMatchItems(this);
     }
   }
 
