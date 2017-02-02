@@ -1,10 +1,10 @@
 {
-  "name": "matchbox",
-  "version": "1.0.0",
+  "name": "matchboxes",
+  "version": "1.1.0",
   "description": "\"JavaScript plugin for matching the height of boxes\"",
   "main": "matchbox.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "karma start"
   },
   "repository": {
     "type": "git",
