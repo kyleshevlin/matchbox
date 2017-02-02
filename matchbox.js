@@ -93,7 +93,7 @@
    * @param {Object} instance - Matchbox instance
    */
   function addInitClass(instance) {
-    addClass(document.documentElement, instance.settings.initClass);
+    addClass(document.body, instance.settings.initClass);
   }
 
   /**
@@ -102,7 +102,7 @@
    * @param {Object} instance - Matchbox instance
    */
   function removeInitClass(instance) {
-    removeClass(document.documentElement, instance.settings.initClass);
+    removeClass(document.body, instance.settings.initClass);
   }
 
   // Workaround for IE9 compatiblity (not supporting classList)
