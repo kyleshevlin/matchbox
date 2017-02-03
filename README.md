@@ -6,7 +6,13 @@ A simple JavaScript plugin to match the height of boxes.
 
 ## Installation
 
-Matchbox is available via Bower.
+Matchbox is available via NPM. _NOTE:_ `matchboxes` is plural as a `Matchbox` project already exists.
+
+```
+$ npm install matchboxes
+```
+
+Matchbox is also available on Bower:
 
 ```
 $ bower install matchboxjs
