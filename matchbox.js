@@ -93,8 +93,7 @@
    * @param {Object} instance - Matchbox instance
    */
   function addInitClass(instance) {
-    var body = document.body || document.querySelector('body')
-    body.classList.add(instance.settings.initClass);
+    addClass(document.body, instance.settings.initClass);
   }
 
   /**
@@ -103,9 +102,49 @@
    * @param {Object} instance - Matchbox instance
    */
   function removeInitClass(instance) {
-    var body = document.body || document.querySelector('body')
-    body.classList.remove(instance.settings.initClass);
+    removeClass(document.body, instance.settings.initClass);
   }
+
+  // Workaround for IE9 compatiblity (not supporting classList)
+  /**
+   * Check if an element has a class
+   * @access private
+   * @param {Object} el - Element to Check
+   * @param {Object} className - Class to check for
+  */
+ function hasClass(el, className) {
+     if (el.classList)
+         return el.classList.contains(className);
+     else
+         return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'));
+ }
+
+ /**
+  * Add a class to an element
+  * @access private
+  * @param {Object} el - Element to add class to
+  * @param {Object} className - Class to add
+ */
+ function addClass(el, className) {
+     if (el.classList)
+         el.classList.add(className);
+     else if (!hasClass(el, className)) el.className += " " + className;
+ }
+
+ /**
+  * Remove class from element
+  * @access private
+  * @param {Object} el - Element to remove class from
+  * @param {Object} className - Class to remove
+ */
+ function removeClass(el, className) {
+     if (el.classList)
+         el.classList.remove(className);
+     else if (hasClass(el, className)) {
+         var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+         el.className = el.className.replace(reg, ' ');
+     }
+ }
 
   /**
    * Gets the boxes that are children of the parent
