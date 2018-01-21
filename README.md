@@ -6,7 +6,7 @@ A simple JavaScript plugin to match the height of boxes.
 
 ## Note
 
-This package should be almost completely unnecessary at this point. I made this before Flexbox and CSS grid were viable options. The projects I worked on at the time often required that I create a grid of boxes with equal, yet dynamic heights. This was my solution. You should count yourself lucky if you never had to solve this problem (and have it work responsively!).
+This package should be almost completely unnecessary at this point. I made this before Flexbox and CSS Grid were viable options. The projects I worked on at the time often required that I create a grid of boxes with equal, yet dynamic heights. This was my solution. You should count yourself lucky if you never had to solve this problem (and have it work responsively!).
 
 ## Installation
 
